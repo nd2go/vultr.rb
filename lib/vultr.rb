@@ -1,6 +1,8 @@
 require "faraday"
 require "faraday_middleware"
+
 require "vultr/version"
+require "vultr/socksify"
 
 module Vultr
   autoload :Client, "vultr/client"

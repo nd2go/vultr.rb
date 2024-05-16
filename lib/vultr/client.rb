@@ -2,11 +2,12 @@ module Vultr
   class Client
     BASE_URL = "https://api.vultr.com/v2"
 
-    attr_reader :api_key, :adapter
+    attr_reader :api_key, :adapter, :proxy_url
 
-    def initialize(api_key:, adapter: Faraday.default_adapter, stubs: nil)
+    def initialize(api_key:, adapter: Faraday.default_adapter, stubs: nil, proxy_url: nil)
       @api_key = api_key
       @adapter = adapter
+      @proxy_url = proxy_url
 
       # Test stubs for requests
       @stubs = stubs
@@ -96,6 +97,11 @@ module Vultr
       UserResource.new(self)
     end
 
+    def current_ip
+      response = connection.get 'http://api.ipify.org?format=json'
+      response.body["ip"]      
+    end   
+
     def connection
       @connection ||= Faraday.new(BASE_URL) do |conn|
         conn.request :authorization, :Bearer, api_key
@@ -103,6 +109,9 @@ module Vultr
 
         conn.response :dates
         conn.response :json, content_type: "application/json"
+
+        # Set the proxy URL
+        conn.proxy = proxy_url if proxy_url.present?
 
         conn.adapter adapter, @stubs
       end
