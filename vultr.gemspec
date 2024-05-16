@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email = ["tolbkni@gmail.com"]
   s.summary = "Ruby bindings for VULTR API."
   s.description = "Ruby bindings for VULTR API. VULTR APIs can be found here: https://www.vultr.com/api/"
-  s.homepage = "https://github.com/tolbkni/vultr.rb"
+  s.homepage = "https://github.com/neddden/vultr.rb"
   s.license = "MIT"
 
   s.files = `git ls-files -z`.split("\x0")
@@ -23,4 +23,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency "faraday", "~> 1.7"
   s.add_dependency "faraday_middleware", "~> 1.1"
+  s.add_dependency "socksify", "~> 1.7.1"
 end
