@@ -116,6 +116,9 @@ module Vultr
         # Set the proxy URL
         conn.proxy = proxy_url if proxy_url.present?
 
+        # Ignore SSL errors
+        conn.ssl[:verify] = false
+
         conn.adapter adapter, @stubs
       end
     end
